@@ -3,210 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Video Studio Super Dashboard</title>
+<title>AI Video Studio Dashboard</title>
 <style>
-
 body{
-margin:0;
-background:#0b0b0b;
-font-family:Arial, Helvetica, sans-serif;
-color:white;
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#111;
+  color:white;
 }
 
-.header{
-padding:18px 20px;
-font-size:26px;
-font-weight:bold;
-color:#e50914;
-letter-spacing:1px;
+header{
+  padding:20px;
+  font-size:24px;
+  font-weight:bold;
 }
 
 .section{
-margin:18px;
-}
-
-.section h2{
-margin:8px 0 12px 0;
-font-weight:normal;
-opacity:0.9;
+  padding:20px;
 }
 
 .row{
-display:flex;
-overflow-x:auto;
-gap:14px;
-padding-bottom:10px;
+  display:flex;
+  overflow-x:auto;
+  gap:12px;
 }
 
 .card{
-min-width:170px;
-height:100px;
-background:#1b1b1b;
-border-radius:10px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-decoration:none;
-color:white;
-font-size:15px;
-transition:transform .2s, background .2s;
-}
-
-.card small{
-opacity:0.6;
-margin-top:5px;
-font-size:12px;
+  background:#1e1e1e;
+  border-radius:12px;
+  padding:16px;
+  min-width:160px;
+  cursor:pointer;
+  transition:0.2s;
 }
 
 .card:hover{
-transform:scale(1.08);
-background:#e50914;
+  background:#2c2c2c;
 }
 
-.workflow{
-background:#161616;
-padding:14px;
-border-radius:10px;
-font-size:13px;
-line-height:1.6;
+button{
+  background:#e50914;
+  border:none;
+  color:white;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
-.promptBox{
-background:#161616;
-padding:14px;
-border-radius:10px;
-margin-bottom:12px;
-font-size:13px;
+textarea{
+  width:100%;
+  border-radius:8px;
+  border:none;
+  padding:10px;
+  margin-top:8px;
+  background:#1a1a1a;
+  color:white;
 }
 
-.copyBtn{
-margin-top:8px;
-padding:7px 12px;
-border:none;
-border-radius:6px;
-background:#e50914;
-color:white;
-font-size:12px;
+.prompt-box{
+  background:#1e1e1e;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:12px;
 }
 
-.ideaBox{
-background:#161616;
-padding:12px;
-border-radius:10px;
-margin-bottom:10px;
-font-size:13px;
-}
-
-.footer{
-text-align:center;
-padding:30px;
-font-size:11px;
-opacity:0.5;
+.add-btn{
+  margin-top:10px;
 }
 
 </style>
-
-<script>
-function copyPrompt(id){
-var text=document.getElementById(id).innerText;
-navigator.clipboard.writeText(text);
-alert("Prompt copied");
-}
-</script>
-
 </head>
-
 <body>
 
-<div class="header">AI VIDEO STUDIO</div>
+<header>🎬 AI Video Studio</header>
 
-<!-- WORKFLOW -->
 <div class="section">
-<h2>Workflow</h2>
-<div class="workflow">
-1. Generate Image → Grok<br>
-2. Animate Video → Kling / PixVerse<br>
-3. Render Alt Video → Hailuo<br>
-4. Edit Video → CapCut<br>
-5. Upload → YouTube / TikTok
-</div>
-</div>
-
-<!-- IMAGE GENERATION -->
-<div class="section">
-<h2>Image Generation</h2>
+<h3>AI Tools</h3>
 <div class="row">
-<a class="card" href="https://grok.com" target="_blank">Grok A<small>Main</small></a>
-<a class="card" href="https://grok.com" target="_blank">Grok B<small>Alt</small></a>
-<a class="card" href="https://grok.com" target="_blank">Grok C<small>Backup</small></a>
+
+<div class="card" onclick="openLink('https://grok.com')">
+Grok A
+</div>
+
+<div class="card" onclick="openLink('https://grok.com')">
+Grok B
+</div>
+
+<div class="card" onclick="openLink('https://app.klingai.com')">
+Kling AI
+</div>
+
+<div class="card" onclick="openLink('https://pixverse.ai')">
+PixVerse
+</div>
+
+<div class="card" onclick="openLink('https://hailuoai.video')">
+Hailuo
+</div>
+
+<div class="card" onclick="openLink('https://www.capcut.com')">
+CapCut
+</div>
+
 </div>
 </div>
 
-<!-- VIDEO GENERATION -->
 <div class="section">
-<h2>Video Generation</h2>
-<div class="row">
-<a class="card" href="https://klingai.com" target="_blank">Kling A</a>
-<a class="card" href="https://klingai.com" target="_blank">Kling B</a>
-<a class="card" href="https://pixverse.ai" target="_blank">PixVerse</a>
-<a class="card" href="https://hailuoai.com" target="_blank">Hailuo</a>
-</div>
+<h3>Prompt Library</h3>
+
+<div id="promptContainer">
+
+<div class="prompt-box">
+<textarea rows="3">ultra realistic cinematic lighting natural body movement 4k film look</textarea>
+<button onclick="copyPrompt(this)">Copy</button>
 </div>
 
-<!-- EDITING -->
-<div class="section">
-<h2>Editing</h2>
-<div class="row">
-<a class="card" href="https://capcut.com" target="_blank">CapCut</a>
-</div>
-</div>
-
-<!-- UPLOAD -->
-<div class="section">
-<h2>Upload</h2>
-<div class="row">
-<a class="card" href="https://youtube.com" target="_blank">YouTube</a>
-<a class="card" href="https://tiktok.com" target="_blank">TikTok</a>
-</div>
-</div>
-
-<!-- PROMPT LIBRARY -->
-<div class="section">
-<h2>Prompt Library</h2>
-
-<div class="promptBox">
-<div id="p1">ultra realistic, cinematic lighting, natural body movement, handheld camera, depth of field, 35mm film look</div>
-<button class="copyBtn" onclick="copyPrompt('p1')">Copy Prompt</button>
-</div>
-
-<div class="promptBox">
-<div id="p2">romantic couple walking in a busy shopping mall, candid moment, natural lighting, people passing by, cinematic camera movement</div>
-<button class="copyBtn" onclick="copyPrompt('p2')">Copy Prompt</button>
-</div>
-
-<div class="promptBox">
-<div id="p3">slow cinematic movement, realistic physics, soft lighting, documentary style camera, natural environment</div>
-<button class="copyBtn" onclick="copyPrompt('p3')">Copy Prompt</button>
+<div class="prompt-box">
+<textarea rows="3">romantic couple cinematic soft lighting natural interaction realistic skin</textarea>
+<button onclick="copyPrompt(this)">Copy</button>
 </div>
 
 </div>
 
-<!-- VIDEO IDEAS -->
-<div class="section">
-<h2>Quick Video Ideas</h2>
-
-<div class="ideaBox">Couple walking through mall → cinematic slow motion</div>
-
-<div class="ideaBox">Kid fighting superhero in funny scene</div>
-
-<div class="ideaBox">POV meeting celebrity in public place</div>
-
-<div class="ideaBox">Funny prank between couple</div>
-
+<button class="add-btn" onclick="addPrompt()">+ Add Prompt</button>
 </div>
 
-<div class="footer">Personal AI Content Studio</div>
+<script>
+
+function openLink(url){
+  window.open(url,'_blank');
+}
+
+function copyPrompt(button){
+  const textarea = button.parentElement.querySelector('textarea');
+  textarea.select();
+  document.execCommand('copy');
+  alert('Prompt copied');
+}
+
+function addPrompt(){
+  const container = document.getElementById('promptContainer');
+
+  const box = document.createElement('div');
+  box.className = 'prompt-box';
+
+  box.innerHTML = `
+<textarea rows="3">new prompt...</textarea>
+<button onclick="copyPrompt(this)">Copy</button>
+`;
+
+  container.appendChild(box);
+}
+
+</script>
 
 </body>
 </html>
