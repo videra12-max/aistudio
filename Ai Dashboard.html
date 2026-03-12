@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Video Studio Super Dashboard</title>
+<style>
+
+body{
+margin:0;
+background:#0b0b0b;
+font-family:Arial, Helvetica, sans-serif;
+color:white;
+}
+
+.header{
+padding:18px 20px;
+font-size:26px;
+font-weight:bold;
+color:#e50914;
+letter-spacing:1px;
+}
+
+.section{
+margin:18px;
+}
+
+.section h2{
+margin:8px 0 12px 0;
+font-weight:normal;
+opacity:0.9;
+}
+
+.row{
+display:flex;
+overflow-x:auto;
+gap:14px;
+padding-bottom:10px;
+}
+
+.card{
+min-width:170px;
+height:100px;
+background:#1b1b1b;
+border-radius:10px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+color:white;
+font-size:15px;
+transition:transform .2s, background .2s;
+}
+
+.card small{
+opacity:0.6;
+margin-top:5px;
+font-size:12px;
+}
+
+.card:hover{
+transform:scale(1.08);
+background:#e50914;
+}
+
+.workflow{
+background:#161616;
+padding:14px;
+border-radius:10px;
+font-size:13px;
+line-height:1.6;
+}
+
+.promptBox{
+background:#161616;
+padding:14px;
+border-radius:10px;
+margin-bottom:12px;
+font-size:13px;
+}
+
+.copyBtn{
+margin-top:8px;
+padding:7px 12px;
+border:none;
+border-radius:6px;
+background:#e50914;
+color:white;
+font-size:12px;
+}
+
+.ideaBox{
+background:#161616;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
+font-size:13px;
+}
+
+.footer{
+text-align:center;
+padding:30px;
+font-size:11px;
+opacity:0.5;
+}
+
+</style>
+
+<script>
+function copyPrompt(id){
+var text=document.getElementById(id).innerText;
+navigator.clipboard.writeText(text);
+alert("Prompt copied");
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="header">AI VIDEO STUDIO</div>
+
+<!-- WORKFLOW -->
+<div class="section">
+<h2>Workflow</h2>
+<div class="workflow">
+1. Generate Image → Grok<br>
+2. Animate Video → Kling / PixVerse<br>
+3. Render Alt Video → Hailuo<br>
+4. Edit Video → CapCut<br>
+5. Upload → YouTube / TikTok
+</div>
+</div>
+
+<!-- IMAGE GENERATION -->
+<div class="section">
+<h2>Image Generation</h2>
+<div class="row">
+<a class="card" href="https://grok.com" target="_blank">Grok A<small>Main</small></a>
+<a class="card" href="https://grok.com" target="_blank">Grok B<small>Alt</small></a>
+<a class="card" href="https://grok.com" target="_blank">Grok C<small>Backup</small></a>
+</div>
+</div>
+
+<!-- VIDEO GENERATION -->
+<div class="section">
+<h2>Video Generation</h2>
+<div class="row">
+<a class="card" href="https://klingai.com" target="_blank">Kling A</a>
+<a class="card" href="https://klingai.com" target="_blank">Kling B</a>
+<a class="card" href="https://pixverse.ai" target="_blank">PixVerse</a>
+<a class="card" href="https://hailuoai.com" target="_blank">Hailuo</a>
+</div>
+</div>
+
+<!-- EDITING -->
+<div class="section">
+<h2>Editing</h2>
+<div class="row">
+<a class="card" href="https://capcut.com" target="_blank">CapCut</a>
+</div>
+</div>
+
+<!-- UPLOAD -->
+<div class="section">
+<h2>Upload</h2>
+<div class="row">
+<a class="card" href="https://youtube.com" target="_blank">YouTube</a>
+<a class="card" href="https://tiktok.com" target="_blank">TikTok</a>
+</div>
+</div>
+
+<!-- PROMPT LIBRARY -->
+<div class="section">
+<h2>Prompt Library</h2>
+
+<div class="promptBox">
+<div id="p1">ultra realistic, cinematic lighting, natural body movement, handheld camera, depth of field, 35mm film look</div>
+<button class="copyBtn" onclick="copyPrompt('p1')">Copy Prompt</button>
+</div>
+
+<div class="promptBox">
+<div id="p2">romantic couple walking in a busy shopping mall, candid moment, natural lighting, people passing by, cinematic camera movement</div>
+<button class="copyBtn" onclick="copyPrompt('p2')">Copy Prompt</button>
+</div>
+
+<div class="promptBox">
+<div id="p3">slow cinematic movement, realistic physics, soft lighting, documentary style camera, natural environment</div>
+<button class="copyBtn" onclick="copyPrompt('p3')">Copy Prompt</button>
+</div>
+
+</div>
+
+<!-- VIDEO IDEAS -->
+<div class="section">
+<h2>Quick Video Ideas</h2>
+
+<div class="ideaBox">Couple walking through mall → cinematic slow motion</div>
+
+<div class="ideaBox">Kid fighting superhero in funny scene</div>
+
+<div class="ideaBox">POV meeting celebrity in public place</div>
+
+<div class="ideaBox">Funny prank between couple</div>
+
+</div>
+
+<div class="footer">Personal AI Content Studio</div>
+
+</body>
+</html>
