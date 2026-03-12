@@ -1,161 +1,347 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Video Studio Dashboard</title>
+<title>AI Video Studio</title>
+
 <style>
+
 body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#111;
-  color:white;
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
 }
 
 header{
-  padding:20px;
-  font-size:24px;
-  font-weight:bold;
+padding:20px;
+font-size:26px;
+font-weight:bold;
 }
 
 .section{
-  padding:20px;
+padding:20px;
 }
 
 .row{
-  display:flex;
-  overflow-x:auto;
-  gap:12px;
+display:flex;
+overflow-x:auto;
+gap:12px;
 }
 
 .card{
-  background:#1e1e1e;
-  border-radius:12px;
-  padding:16px;
-  min-width:160px;
-  cursor:pointer;
-  transition:0.2s;
+background:#1c1c1c;
+border-radius:12px;
+padding:16px;
+min-width:160px;
+cursor:pointer;
+transition:.2s;
 }
 
 .card:hover{
-  background:#2c2c2c;
+background:#2c2c2c;
 }
 
 button{
-  background:#e50914;
-  border:none;
-  color:white;
-  padding:6px 10px;
-  border-radius:6px;
-  cursor:pointer;
+background:#e50914;
+border:none;
+color:white;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
 }
 
 textarea{
-  width:100%;
-  border-radius:8px;
-  border:none;
-  padding:10px;
-  margin-top:8px;
-  background:#1a1a1a;
-  color:white;
+width:100%;
+background:#1a1a1a;
+border:none;
+color:white;
+border-radius:8px;
+padding:8px;
 }
 
-.prompt-box{
-  background:#1e1e1e;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:12px;
+.prompt{
+background:#1e1e1e;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
 }
 
-.add-btn{
-  margin-top:10px;
+input{
+background:#1a1a1a;
+border:none;
+color:white;
+padding:6px;
+border-radius:6px;
+}
+
+.workflow{
+background:#1c1c1c;
+padding:12px;
+border-radius:10px;
+margin-top:10px;
 }
 
 </style>
 </head>
+
 <body>
 
-<header>🎬 AI Video Studio</header>
+<header>🎬 AI VIDEO STUDIO</header>
+
 
 <div class="section">
+
 <h3>AI Tools</h3>
+
 <div class="row">
 
-<div class="card" onclick="openLink('https://grok.com')">
-Grok A
-</div>
+<div class="card" onclick="openLink('https://grok.com')">Grok A</div>
+<div class="card" onclick="openLink('https://grok.com')">Grok B</div>
+<div class="card" onclick="openLink('https://app.klingai.com')">Kling AI</div>
+<div class="card" onclick="openLink('https://pixverse.ai')">PixVerse</div>
+<div class="card" onclick="openLink('https://hailuoai.video')">Hailuo</div>
+<div class="card" onclick="openLink('https://capcut.com')">CapCut</div>
 
-<div class="card" onclick="openLink('https://grok.com')">
-Grok B
-</div>
-
-<div class="card" onclick="openLink('https://app.klingai.com')">
-Kling AI
-</div>
-
-<div class="card" onclick="openLink('https://pixverse.ai')">
-PixVerse
-</div>
-
-<div class="card" onclick="openLink('https://hailuoai.video')">
-Hailuo
-</div>
-
-<div class="card" onclick="openLink('https://www.capcut.com')">
-CapCut
 </div>
 
 </div>
-</div>
+
 
 <div class="section">
+
+<h3>AI Credit Tracker</h3>
+
+<div class="prompt">
+
+Grok credits  
+<input id="grokCredit" type="number" onchange="saveCredits()">
+
+Kling credits  
+<input id="klingCredit" type="number" onchange="saveCredits()">
+
+PixVerse credits  
+<input id="pixCredit" type="number" onchange="saveCredits()">
+
+</div>
+
+</div>
+
+
+
+<div class="section">
+
 <h3>Prompt Library</h3>
 
-<div id="promptContainer">
+<select id="category">
+<option value="video">Video Prompt</option>
+<option value="image">Image Prompt</option>
+<option value="camera">Camera Prompt</option>
+<option value="character">Character Prompt</option>
+</select>
 
-<div class="prompt-box">
-<textarea rows="3">ultra realistic cinematic lighting natural body movement 4k film look</textarea>
-<button onclick="copyPrompt(this)">Copy</button>
+<button onclick="addPrompt()">Add Prompt</button>
+
+<div id="promptList"></div>
+
 </div>
 
-<div class="prompt-box">
-<textarea rows="3">romantic couple cinematic soft lighting natural interaction realistic skin</textarea>
-<button onclick="copyPrompt(this)">Copy</button>
-</div>
+
+
+<div class="section">
+
+<h3>Video Workflow Generator</h3>
+
+<div class="workflow">
+
+<select id="scene">
+
+<option>Romantic Scene</option>
+<option>Funny Scene</option>
+<option>Action Scene</option>
+<option>POV Scene</option>
+
+</select>
+
+<button onclick="generateWorkflow()">Generate</button>
+
+<p id="workflowResult"></p>
 
 </div>
 
-<button class="add-btn" onclick="addPrompt()">+ Add Prompt</button>
 </div>
+
+
 
 <script>
 
+
 function openLink(url){
-  window.open(url,'_blank');
+window.open(url,'_blank')
 }
 
-function copyPrompt(button){
-  const textarea = button.parentElement.querySelector('textarea');
-  textarea.select();
-  document.execCommand('copy');
-  alert('Prompt copied');
-}
 
 function addPrompt(){
-  const container = document.getElementById('promptContainer');
 
-  const box = document.createElement('div');
-  box.className = 'prompt-box';
+let category=document.getElementById("category").value
 
-  box.innerHTML = `
-<textarea rows="3">new prompt...</textarea>
-<button onclick="copyPrompt(this)">Copy</button>
-`;
-
-  container.appendChild(box);
+let prompt={
+text:"new prompt...",
+category:category
 }
+
+let prompts=getPrompts()
+
+prompts.push(prompt)
+
+localStorage.setItem("prompts",JSON.stringify(prompts))
+
+renderPrompts()
+
+}
+
+
+
+function getPrompts(){
+
+let p=localStorage.getItem("prompts")
+
+if(!p) return []
+
+return JSON.parse(p)
+
+}
+
+
+
+function renderPrompts(){
+
+let prompts=getPrompts()
+
+let container=document.getElementById("promptList")
+
+container.innerHTML=""
+
+prompts.forEach((p,i)=>{
+
+let div=document.createElement("div")
+
+div.className="prompt"
+
+div.innerHTML=`
+
+<b>${p.category}</b>
+
+<textarea onchange="updatePrompt(${i},this.value)">${p.text}</textarea>
+
+<button onclick="copyPrompt(${i})">Copy</button>
+
+<button onclick="deletePrompt(${i})">Delete</button>
+
+`
+
+container.appendChild(div)
+
+})
+
+}
+
+
+
+function updatePrompt(i,text){
+
+let prompts=getPrompts()
+
+prompts[i].text=text
+
+localStorage.setItem("prompts",JSON.stringify(prompts))
+
+}
+
+
+
+function deletePrompt(i){
+
+let prompts=getPrompts()
+
+prompts.splice(i,1)
+
+localStorage.setItem("prompts",JSON.stringify(prompts))
+
+renderPrompts()
+
+}
+
+
+
+function copyPrompt(i){
+
+let prompts=getPrompts()
+
+navigator.clipboard.writeText(prompts[i].text)
+
+alert("Prompt copied")
+
+}
+
+
+
+function saveCredits(){
+
+localStorage.setItem("grokCredit",document.getElementById("grokCredit").value)
+
+localStorage.setItem("klingCredit",document.getElementById("klingCredit").value)
+
+localStorage.setItem("pixCredit",document.getElementById("pixCredit").value)
+
+}
+
+
+
+function loadCredits(){
+
+document.getElementById("grokCredit").value=localStorage.getItem("grokCredit")||0
+
+document.getElementById("klingCredit").value=localStorage.getItem("klingCredit")||0
+
+document.getElementById("pixCredit").value=localStorage.getItem("pixCredit")||0
+
+}
+
+
+
+function generateWorkflow(){
+
+let scene=document.getElementById("scene").value
+
+let text=`
+
+1 Generate image in Grok
+
+2 Animate in Kling / PixVerse
+
+3 Extend scene
+
+4 Edit in CapCut
+
+Scene type: ${scene}
+
+`
+
+document.getElementById("workflowResult").innerText=text
+
+}
+
+
+
+renderPrompts()
+
+loadCredits()
 
 </script>
 
 </body>
 </html>
+```
