@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
 
 body{
 margin:0;
-font-family:Arial;
+font-family:Arial, Helvetica, sans-serif;
 background:#111;
 color:white;
 }
@@ -60,6 +59,7 @@ border:none;
 color:white;
 border-radius:8px;
 padding:8px;
+margin-top:6px;
 }
 
 .prompt{
@@ -69,17 +69,25 @@ border-radius:10px;
 margin-bottom:10px;
 }
 
-input{
+input,select{
 background:#1a1a1a;
 border:none;
 color:white;
 padding:6px;
 border-radius:6px;
+margin-top:6px;
 }
 
-.workflow{
+.builder{
 background:#1c1c1c;
-padding:12px;
+padding:14px;
+border-radius:12px;
+margin-top:10px;
+}
+
+.result{
+background:#1e1e1e;
+padding:10px;
 border-radius:10px;
 margin-top:10px;
 }
@@ -116,19 +124,100 @@ margin-top:10px;
 
 <div class="prompt">
 
-Grok credits  
+Grok credits<br>
 <input id="grokCredit" type="number" onchange="saveCredits()">
 
-Kling credits  
+<br><br>
+
+Kling credits<br>
 <input id="klingCredit" type="number" onchange="saveCredits()">
 
-PixVerse credits  
+<br><br>
+
+PixVerse credits<br>
 <input id="pixCredit" type="number" onchange="saveCredits()">
 
 </div>
 
 </div>
 
+
+<div class="section">
+
+<h3>Prompt Builder</h3>
+
+<div class="builder">
+
+Character<br>
+<select id="char">
+<option>couple</option>
+<option>beautiful woman</option>
+<option>man</option>
+<option>child</option>
+<option>superhero</option>
+</select>
+
+<br><br>
+
+Action<br>
+<select id="action">
+<option>walking together</option>
+<option>talking</option>
+<option>hugging</option>
+<option>kissing</option>
+<option>running</option>
+<option>fighting</option>
+</select>
+
+<br><br>
+
+Camera
+<br>
+<select id="camera">
+<option>cinematic close up</option>
+<option>medium shot</option>
+<option>wide cinematic shot</option>
+<option>tracking shot</option>
+<option>handheld camera</option>
+</select>
+
+<br><br>
+
+Lighting
+<br>
+<select id="light">
+<option>soft cinematic lighting</option>
+<option>sunset lighting</option>
+<option>dramatic lighting</option>
+<option>studio lighting</option>
+<option>neon lighting</option>
+</select>
+
+<br><br>
+
+Style
+<br>
+<select id="style">
+<option>ultra realistic</option>
+<option>cinematic film look</option>
+<option>8k photorealistic</option>
+<option>hyper realistic</option>
+<option>movie scene</option>
+</select>
+
+<br><br>
+
+<button onclick="generatePrompt()">Generate Prompt</button>
+
+<div class="result">
+<textarea id="promptResult" rows="4"></textarea>
+
+<button onclick="copyGenerated()">Copy Prompt</button>
+</div>
+
+</div>
+
+</div>
 
 
 <div class="section">
@@ -149,51 +238,46 @@ PixVerse credits
 </div>
 
 
-
-<div class="section">
-
-<h3>Video Workflow Generator</h3>
-
-<div class="workflow">
-
-<select id="scene">
-
-<option>Romantic Scene</option>
-<option>Funny Scene</option>
-<option>Action Scene</option>
-<option>POV Scene</option>
-
-</select>
-
-<button onclick="generateWorkflow()">Generate</button>
-
-<p id="workflowResult"></p>
-
-</div>
-
-</div>
-
-
-
 <script>
-
 
 function openLink(url){
 window.open(url,'_blank')
 }
 
 
+function generatePrompt(){
+
+let char=document.getElementById("char").value
+let action=document.getElementById("action").value
+let camera=document.getElementById("camera").value
+let light=document.getElementById("light").value
+let style=document.getElementById("style").value
+
+let result=`${style}, ${char} ${action}, ${camera}, ${light}, natural body movement, realistic skin, cinematic motion`
+
+document.getElementById("promptResult").value=result
+
+}
+
+
+function copyGenerated(){
+let text=document.getElementById("promptResult").value
+navigator.clipboard.writeText(text)
+alert("Prompt copied")
+}
+
+
 function addPrompt(){
 
 let category=document.getElementById("category").value
+let text=document.getElementById("promptResult").value || "new prompt"
 
 let prompt={
-text:"new prompt...",
+text:text,
 category:category
 }
 
 let prompts=getPrompts()
-
 prompts.push(prompt)
 
 localStorage.setItem("prompts",JSON.stringify(prompts))
@@ -201,7 +285,6 @@ localStorage.setItem("prompts",JSON.stringify(prompts))
 renderPrompts()
 
 }
-
 
 
 function getPrompts(){
@@ -213,7 +296,6 @@ if(!p) return []
 return JSON.parse(p)
 
 }
-
 
 
 function renderPrompts(){
@@ -229,6 +311,7 @@ prompts.forEach((p,i)=>{
 let div=document.createElement("div")
 
 div.className="prompt"
+
 
 div.innerHTML=`
 
@@ -249,7 +332,6 @@ container.appendChild(div)
 }
 
 
-
 function updatePrompt(i,text){
 
 let prompts=getPrompts()
@@ -259,7 +341,6 @@ prompts[i].text=text
 localStorage.setItem("prompts",JSON.stringify(prompts))
 
 }
-
 
 
 function deletePrompt(i){
@@ -275,7 +356,6 @@ renderPrompts()
 }
 
 
-
 function copyPrompt(i){
 
 let prompts=getPrompts()
@@ -285,7 +365,6 @@ navigator.clipboard.writeText(prompts[i].text)
 alert("Prompt copied")
 
 }
-
 
 
 function saveCredits(){
@@ -299,8 +378,8 @@ localStorage.setItem("pixCredit",document.getElementById("pixCredit").value)
 }
 
 
-
 function loadCredits(){
+
 
 document.getElementById("grokCredit").value=localStorage.getItem("grokCredit")||0
 
@@ -311,31 +390,6 @@ document.getElementById("pixCredit").value=localStorage.getItem("pixCredit")||0
 }
 
 
-
-function generateWorkflow(){
-
-let scene=document.getElementById("scene").value
-
-let text=`
-
-1 Generate image in Grok
-
-2 Animate in Kling / PixVerse
-
-3 Extend scene
-
-4 Edit in CapCut
-
-Scene type: ${scene}
-
-`
-
-document.getElementById("workflowResult").innerText=text
-
-}
-
-
-
 renderPrompts()
 
 loadCredits()
@@ -344,4 +398,3 @@ loadCredits()
 
 </body>
 </html>
-```
